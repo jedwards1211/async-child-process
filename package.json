@@ -1,7 +1,7 @@
 {
-  "name": "es2015-library-skeleton",
+  "name": "async-child-process",
   "version": "3.0.0",
-  "description": "my personal skeleton for ES2015 library NPM packages",
+  "description": "Promise-based child process interface",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint src test",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jedwards1211/es2015-library-skeleton.git"
+    "url": "git+https://github.com/jedwards1211/async-child-process.git"
   },
   "keywords": [
     "es2015"
@@ -27,9 +27,9 @@
   "author": "Andy Edwards",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jedwards1211/es2015-library-skeleton/issues"
+    "url": "https://github.com/jedwards1211/async-child-process/issues"
   },
-  "homepage": "https://github.com/jedwards1211/es2015-library-skeleton#readme",
+  "homepage": "https://github.com/jedwards1211/async-child-process#readme",
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
@@ -50,5 +50,7 @@
     "mocha": "^3.1.0",
     "rimraf": "^2.5.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-runtime": "^6.11.6"
+  }
 }
