@@ -58,7 +58,7 @@ describe('join', () => {
         await join(child, {timeout: 50})
       } catch (error) {
         errored = true
-        expect(Date.now() - startTime).to.be.greaterThan(50)
+        expect(Date.now() - startTime).to.not.be.lessThan(50)
         expect(exited).to.be.false
         expect(error.message).to.equal('join timed out')
       } finally {
