@@ -4,5 +4,5 @@ process.on('SIGINT', function () {
 })
 setTimeout(function () {
   console.log('child is still alive')
-}, 3000)
+}, 30000)
 process.send({ready: true})
