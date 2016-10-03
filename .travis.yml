@@ -6,5 +6,5 @@ node_js:
 before_install:
   - npm config set progress false
 script:
-  - babel-node ./node_modules/.bin/isparta cover --report lcovonly _mocha -- $npm_package_config_mocha
+  - npm run coverage
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
