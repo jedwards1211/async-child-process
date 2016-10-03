@@ -23,7 +23,7 @@ describe('kill', () => {
   })
   describe('with timeout', () => {
     it('rejects when timeout elapses before process exits', async () => {
-      const child = spawn('node', [require.resolve('./util/killTestChild1')], {stdio: [0, 1, 2, 'ipc']})
+      const child = spawn('node', [require.resolve('./util/killTimeoutChild')], {stdio: [0, 1, 2, 'ipc']})
       let signal, error
       child.on('exit', (code, _signal) => signal = _signal)
       await new Promise(resolve => child.on('message', resolve))
