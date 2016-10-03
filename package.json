@@ -15,7 +15,7 @@
     "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version"
   },
   "config": {
-    "mocha": "--compilers js:babel-core/register ./test/**/*.js"
+    "mocha": "--compilers js:babel-core/register ./test/*.js"
   },
   "nyc": {
     "include": [
