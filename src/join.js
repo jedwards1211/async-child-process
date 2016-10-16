@@ -6,7 +6,7 @@ export type Result = {code: ?number, signal: ?string}
 
 function join(child: ChildProcess, options?: {timeout?: number} = {}): Promise<Result> {
   const {timeout} = options
-  return new Promise((_resolve: Function, _reject: Function) => {
+  return new Promise((_resolve: (result: Result) => void, _reject: (error: Error) => void) => {
     let timeoutId
     function unlisten() {
       child.removeAllListeners()

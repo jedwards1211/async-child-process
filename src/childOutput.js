@@ -9,7 +9,7 @@ export default function childOutput(
   predicate: (output: string) => boolean | RegExp,
   options?: {timeout?: number} = {}
 ): Promise<string> {
-  return new Promise((_resolve: Function, _reject: Function) => {
+  return new Promise((_resolve: (data: string) => void, _reject: (error: Error) => void) => {
     const {timeout} = options
     let timeoutId
 
@@ -35,12 +35,12 @@ export default function childOutput(
     }
     stream.on('data', onData)
 
-    const onClose = (): any => reject(new Error('stream closed'))
-    const onExit = (): any => reject(new Error('process exited'))
+    const onClose = () => reject(new Error('stream closed'))
+    const onExit = () => reject(new Error('process exited'))
     child.on('error', reject)
     child.on('exit', onExit)
     child.on('close', onClose)
 
-    if (timeout) timeoutId = setTimeout((): any => reject(new Error('childOutput timed out')), timeout)
+    if (timeout) timeoutId = setTimeout(() => reject(new Error('childOutput timed out')), timeout)
   })
 }

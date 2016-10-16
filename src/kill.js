@@ -13,7 +13,7 @@ function kill(child: ChildProcess): Promise<void> {
     : {}
   const {timeout} = options
 
-  return new Promise((_resolve: Function, _reject: Function) => {
+  return new Promise((_resolve: () => void, _reject: (error: Error) => void) => {
     let timeoutId
     function unlisten() {
       child.removeAllListeners()
@@ -29,7 +29,7 @@ function kill(child: ChildProcess): Promise<void> {
     }
     child.on('exit', resolve)
     child.on('error', reject)
-    if (timeout) timeoutId = setTimeout((): any => reject(new Error('kill timed out')), timeout)
+    if (timeout) timeoutId = setTimeout(() => reject(new Error('kill timed out')), timeout)
     if (signal) child.kill(signal)
     else child.kill()
   })

@@ -9,10 +9,13 @@
     "lint:watch": "esw --watch src test",
     "flow": "flow",
     "flow:watch": "flow-watch --ignore lib/ --ignore node_modules/ --watch .flowconfig --watch src/ --watch scripts/ --watch test/",
+    "flow:coverage": "for file in src/**.js test/**.js; do echo $file; flow coverage $file; done",
     "test": "mocha $npm_package_config_mocha",
     "coverage": "NODE_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
-    "prepublish": "npm run lint && flow && npm run coverage && rimraf lib && babel src --out-dir lib",
-    "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version"
+    "build": "rimraf lib && babel src --out-dir lib",
+    "prepublish": "npm run lint && flow && npm run coverage && npm run build && npm run gen-flow-files",
+    "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version",
+    "gen-flow-files": "babel-node scripts/gen-flow-files.js"
   },
   "config": {
     "mocha": "--compilers js:babel-core/register ./test/*.js"
@@ -52,11 +55,13 @@
     "babel-register": "^6.16.3",
     "chai": "^3.5.0",
     "coveralls": "^2.11.14",
+    "es6-promisify": "^5.0.0",
     "eslint": "^3.7.0",
     "eslint-config-andy": "github:jedwards1211/eslint-config-andy#2.0.0-beta7",
     "eslint-watch": "^2.1.14",
     "flow-bin": "^0.33.0",
     "flow-watch": "^1.0.0",
+    "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.1.0",
     "nyc": "^8.3.0",
