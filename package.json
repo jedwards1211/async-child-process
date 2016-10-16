@@ -15,7 +15,12 @@
     "build": "rimraf lib && babel src --out-dir lib",
     "prepublish": "npm run lint && flow && npm run coverage && npm run build && npm run gen-flow-files",
     "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version",
-    "gen-flow-files": "babel-node scripts/gen-flow-files.js"
+    "gen-flow-files": "flow gen-flow-files src/ --out-dir lib",
+    "build": "rimraf lib && babel src --out-dir lib",
+    "test": "mocha $npm_package_config_mocha",
+    "coverage": "NODE_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
+    "prepublish": "npm run lint && flow && npm run coverage && npm run build && npm run gen-flow-files",
+    "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version"
   },
   "config": {
     "mocha": "--compilers js:babel-core/register ./test/*.js"
