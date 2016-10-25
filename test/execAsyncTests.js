@@ -1,5 +1,6 @@
 import {expect, assert} from 'chai'
-import execAsync from '../src/execAsync'
+import {exec} from 'child_process'
+import execAsync, {customize} from '../src/execAsync'
 
 describe('execAsync', () => {
   describe('on process that exits 0', () => {
@@ -24,11 +25,17 @@ describe('execAsync', () => {
   })
   describe('on process that exits with signal', () => {
     it('rejects with signal after process exits', async () => {
+      const execAsync = customize((...args) => {
+        const child = exec(...args)
+        process.kill(child.pid, 'SIGINT')
+        return child
+      })
       try {
-        await execAsync(`node -e 'setTimeout(function () { process.kill(process.pid, "SIGKILL") }, 50)'`)
+        await execAsync(`node -e 'setTimeout(function () { console.log('done') }, 50)'`)
         assert.fail("should have rejected")
       } catch (error) {
-        expect(error.signal).to.equal('SIGKILL')
+        expect(error.code).to.be.null
+        expect(error.signal).to.equal('SIGINT')
       }
     })
   })
