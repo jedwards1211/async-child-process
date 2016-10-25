@@ -1,4 +1,4 @@
-import {expect} from 'chai'
+import {expect, assert} from 'chai'
 import {spawn} from 'child_process'
 import kill from '../src/kill'
 
@@ -19,6 +19,17 @@ describe('kill', () => {
       child.on('exit', (code, _signal) => signal = _signal)
       await kill(child, 'SIGINT')
       expect(signal).to.equal('SIGINT')
+    })
+  })
+  describe("with process that can't be spawned", () => {
+    it('rejects with error event', async () => {
+      const child = spawn('blarghhh')
+      try {
+        await kill(child, 'SIGINT')
+        assert.fail("should have rejected")
+      } catch (error) {
+        // ignore
+      }
     })
   })
 })
