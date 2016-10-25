@@ -4,20 +4,14 @@ import type {ChildProcess} from 'child_process'
 
 export type Result = {code: ?number, signal: ?string}
 
-function join(child: ChildProcess, options?: {timeout?: number} = {}): Promise<Result> {
-  const {timeout} = options
+function join(child: ChildProcess): Promise<Result> {
   return new Promise((_resolve: (result: Result) => void, _reject: (error: Error) => void) => {
-    let timeoutId
-    function unlisten() {
-      child.removeAllListeners()
-      if (timeoutId != null) clearTimeout(timeoutId)
-    }
     function resolve(result: Result) {
-      unlisten()
+      child.removeAllListeners()
       _resolve(result)
     }
     function reject(error: Error) {
-      unlisten()
+      child.removeAllListeners()
       _reject(error)
     }
     child.on('exit', (code: ?number, signal: ?string): any => {
@@ -26,7 +20,6 @@ function join(child: ChildProcess, options?: {timeout?: number} = {}): Promise<R
       else resolve({code, signal})
     })
     child.on('error', reject)
-    if (timeout) timeoutId = setTimeout((): any => reject(new Error('join timed out')), timeout)
   })
 }
 

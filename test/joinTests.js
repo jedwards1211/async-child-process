@@ -47,24 +47,4 @@ describe('join', () => {
       expect(errored).to.be.true
     })
   })
-  describe("on process that doesn't exit in the given timeout", () => {
-    it('rejects with Error after timeout is elapsed', async () => {
-      const child = spawn('node', ['-e', 'setTimeout(function () { process.exit(0) }, 5000)'])
-      let exited = false
-      let errored = false
-      child.on('exit', () => exited = true)
-      let startTime = Date.now()
-      try {
-        await join(child, {timeout: 50})
-      } catch (error) {
-        errored = true
-        expect(Date.now() - startTime).to.not.be.lessThan(50)
-        expect(exited).to.be.false
-        expect(error.message).to.equal('join timed out')
-      } finally {
-        child.kill()
-      }
-      expect(errored).to.be.true
-    })
-  })
 })

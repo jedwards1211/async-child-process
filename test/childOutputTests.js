@@ -41,16 +41,4 @@ describe('childStdout', () => {
     await promise
     expect(error.message).to.match(/stream closed/)
   })
-  it('rejects if timeout elapsed before getting output', async () => {
-    const child = spawn('node', ['-e', `
-    setTimeout(function () { console.log('test2') }, 500)
-    `])
-    let error
-    try {
-      await childStdout(child, /test2/, {timeout: 50})
-    } catch (e) {
-      error = e
-    }
-    expect(error.message).to.match(/timed out/)
-  })
 })
