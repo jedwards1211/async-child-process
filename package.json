@@ -8,7 +8,7 @@
     "lint:fix": "eslint --fix src test",
     "lint:watch": "esw --watch src test",
     "flow": "flow",
-    "flow:watch": "flow-watch --ignore lib/ --ignore node_modules/ --watch .flowconfig --watch src/ --watch scripts/ --watch test/",
+    "flow:watch": "flow-watch --ignore lib/ --ignore node_modules/ --watch .flowconfig --watch src/ --watch test/",
     "flow:coverage": "for file in src/**.js test/**.js; do echo $file; flow coverage $file; done",
     "test": "mocha $npm_package_config_mocha",
     "coverage": "NODE_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
