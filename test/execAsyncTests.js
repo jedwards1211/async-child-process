@@ -25,11 +25,11 @@ describe('execAsync', () => {
   describe('on process that exits with signal', () => {
     it('rejects with signal after process exits', async () => {
       try {
-        await execAsync(`node -e 'setTimeout(function () { process.kill(process.pid, "SIGINT") }, 50)'`)
+        await execAsync(`node -e 'setTimeout(function () { process.kill(process.pid, "SIGKILL") }, 50)'`)
         assert.fail("should have rejected")
       } catch (error) {
         expect(error.code).to.be.null
-        expect(error.signal).to.equal('SIGINT')
+        expect(error.signal).to.equal('SIGKILL')
       }
     })
   })
