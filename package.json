@@ -18,7 +18,7 @@
     "gen-flow-files": "flow gen-flow-files src/ --out-dir lib",
     "build": "rimraf lib && babel src --out-dir lib",
     "test": "mocha $npm_package_config_mocha",
-    "coverage": "NODE_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
+    "coverage": "NODE_ENV=coverage nyc --check-coverage --lines 100 --functions 100 --branches 100 --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
     "prepublish": "npm run lint && flow && npm run coverage && npm run build",
     "postpublish": "git tag -a v$npm_package_version -m v$npm_package_version && git push origin v$npm_package_version"
   },
