@@ -15,8 +15,20 @@ function join(child: ChildProcess): Promise<Result> {
       _reject(error)
     }
     child.on('exit', (code: ?number, signal: ?string): any => {
-      if (code != null && code !== 0) reject(new Error(`process exited with code ${code}`))
-      if (signal) reject(new Error(`process exited with signal ${signal}`))
+      if (code != null && code !== 0) {
+        const error = new Error(`process exited with code ${code}`)
+        const flowWorkaround: Object = error
+        flowWorkaround.code = code;
+        flowWorkaround.signal = null;
+        reject(error)
+      }
+      else if (signal) {
+        const error = new Error(`process exited with signal ${signal}`)
+        const flowWorkaround: Object = error
+        flowWorkaround.code = null;
+        flowWorkaround.signal = signal;
+        reject(error)
+      }
       else resolve({code, signal})
     })
     child.on('error', reject)

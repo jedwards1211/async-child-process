@@ -25,6 +25,8 @@ describe('join', () => {
         errored = true
         expect(exited).to.be.true
         expect(error.message).to.equal('process exited with code 1')
+        expect(error.code).to.equal(1)
+        expect(error.signal).to.be.null
       }
       expect(errored).to.be.true
     })
@@ -43,6 +45,8 @@ describe('join', () => {
         errored = true
         expect(exited).to.be.true
         expect(error.message).to.equal('process exited with signal SIGINT')
+        expect(error.code).to.be.null
+        expect(error.signal).to.equal('SIGINT')
       }
       expect(errored).to.be.true
     })
