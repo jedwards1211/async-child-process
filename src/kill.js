@@ -2,7 +2,7 @@
 
 import type {ChildProcess} from 'child_process'
 
-function customize(
+export function customize(
   kill: (child: ChildProcess, signal?: string) => void
 ): (child: ChildProcess, signal?: string) => Promise<void> {
   return (child, signal) => {
