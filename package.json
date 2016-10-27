@@ -1,6 +1,6 @@
 {
   "name": "async-child-process",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Promise-based child process interface",
   "main": "lib/index.js",
   "scripts": {
